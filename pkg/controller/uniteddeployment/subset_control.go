@@ -138,23 +138,7 @@ func (m *SubsetControl) convertToSubset(set metav1.Object, updatedRevision strin
 	}
 
 	subset := &Subset{}
-	subset.ObjectMeta = metav1.ObjectMeta{
-		Name:                       set.GetName(),
-		GenerateName:               set.GetGenerateName(),
-		Namespace:                  set.GetNamespace(),
-		SelfLink:                   set.GetSelfLink(),
-		UID:                        set.GetUID(),
-		ResourceVersion:            set.GetResourceVersion(),
-		Generation:                 set.GetGeneration(),
-		CreationTimestamp:          set.GetCreationTimestamp(),
-		DeletionTimestamp:          set.GetDeletionTimestamp(),
-		DeletionGracePeriodSeconds: set.GetDeletionGracePeriodSeconds(),
-		Labels:                     set.GetLabels(),
-		Annotations:                set.GetAnnotations(),
-		OwnerReferences:            set.GetOwnerReferences(),
-		Finalizers:                 set.GetFinalizers(),
-		ClusterName:                set.GetClusterName(),
-	}
+	subset.ObjectMeta = *m.adapter.ObjectMeta(set)
 	subset.Spec.SubsetName = subSetName
 
 	specReplicas, specPartition, statusReplicas, statusReadyReplicas, statusUpdatedReplicas, statusUpdatedReadyReplicas, err := m.adapter.GetReplicaDetails(set, updatedRevision)

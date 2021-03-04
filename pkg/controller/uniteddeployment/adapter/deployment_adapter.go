@@ -160,6 +160,12 @@ func (a *DeploymentAdapter) IsExpected(obj metav1.Object, revision string) bool 
 	return obj.GetLabels()[appsv1.ControllerRevisionHashLabelKey] != revision
 }
 
+// ObjectMeta returns a pointer of the subset ObjectMeta.
+func (a *DeploymentAdapter) ObjectMeta(obj metav1.Object) *metav1.ObjectMeta {
+	deployment := obj.(*appsv1.Deployment)
+	return &deployment.ObjectMeta
+}
+
 // getDeploymentPods gets all Pods under a Deployment object
 func (a *DeploymentAdapter) getDeploymentPods(set *appsv1.Deployment) ([]*corev1.Pod, error) {
 	deploymentReplicaSets, err := a.getDeploymentReplicaSets(set)

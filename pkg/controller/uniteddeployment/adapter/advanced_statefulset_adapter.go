@@ -186,6 +186,12 @@ func (a *AdvancedStatefulSetAdapter) IsExpected(obj metav1.Object, revision stri
 	return obj.GetLabels()[alpha1.ControllerRevisionHashLabelKey] != revision
 }
 
+// ObjectMeta returns a pointer of the subset ObjectMeta.
+func (a *AdvancedStatefulSetAdapter) ObjectMeta(obj metav1.Object) *metav1.ObjectMeta {
+	set := obj.(*alpha1.StatefulSet)
+	return &set.ObjectMeta
+}
+
 func (a *AdvancedStatefulSetAdapter) getStatefulSetPods(set *alpha1.StatefulSet) ([]*corev1.Pod, error) {
 	selector, err := metav1.LabelSelectorAsSelector(set.Spec.Selector)
 	if err != nil {

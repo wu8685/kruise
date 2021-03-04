@@ -41,4 +41,6 @@ type Adapter interface {
 	IsExpected(subset metav1.Object, revision string) bool
 	// PostUpdate does some works after subset updated
 	PostUpdate(ud *alpha1.UnitedDeployment, subset runtime.Object, revision string, partition int32) error
+	// ObjectMeta returns a pointer of the subset ObjectMeta.
+	ObjectMeta(subset metav1.Object) *metav1.ObjectMeta
 }

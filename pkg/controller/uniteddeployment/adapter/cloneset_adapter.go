@@ -146,6 +146,12 @@ func (a *CloneSetAdapter) IsExpected(obj metav1.Object, revision string) bool {
 	return obj.GetLabels()[alpha1.ControllerRevisionHashLabelKey] != revision
 }
 
+// ObjectMeta returns a pointer of the subset ObjectMeta.
+func (a *CloneSetAdapter) ObjectMeta(obj metav1.Object) *metav1.ObjectMeta {
+	set := obj.(*alpha1.CloneSet)
+	return &set.ObjectMeta
+}
+
 func (a *CloneSetAdapter) getCloneSetPods(set *alpha1.CloneSet) ([]*corev1.Pod, error) {
 
 	selector, err := metav1.LabelSelectorAsSelector(set.Spec.Selector)
